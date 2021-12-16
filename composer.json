@@ -1,0 +1,20 @@
+{
+    "description": "Track your app vitals with OhDear.app",
+    "type": "neos-plugin",
+    "name": "wy/neos-oh-dear",
+    "require": {
+        "php": ">=7.4",
+        "neos/flow": "*",
+        "symfony/process": "*"
+    },
+    "autoload": {
+        "psr-4": {
+            "Wysiwyg\\OhDear\\": "Classes/"
+        }
+    },
+    "extra": {
+        "neos": {
+            "package-key": "Wysiwyg.OhDear"
+        }
+    }
+}
