@@ -41,11 +41,11 @@ $checks = [
     new Checks\DiskSpaceCheck(),
     new Checks\CpuLoadCheck(),
     new Checks\DatabaseCheck(
+        'mysql',
         $app->getNeosConfig('Neos.Flow.persistence.backendOptions.host'),
         $app->getNeosConfig('Neos.Flow.persistence.backendOptions.user'),
         $app->getNeosConfig('Neos.Flow.persistence.backendOptions.password'),
-        $app->getNeosConfig('Neos.Flow.persistence.backendOptions.dbname'),
-        (int) $app->getNeosConfig('Neos.Flow.persistence.backendOptions.port')
+        $app->getNeosConfig('Neos.Flow.persistence.backendOptions.dbname')
     ),
     new Checks\RedisCheck(
         $app->getNeosConfig('Neos_Fusion_Content.backendOptions.hostname', 'Caches'),

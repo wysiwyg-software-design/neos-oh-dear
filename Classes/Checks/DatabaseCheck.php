@@ -6,6 +6,7 @@ use Wysiwyg\OhDear\CheckResult;
 
 class DatabaseCheck extends Check
 {
+    protected string $driver;
     protected string $host;
     protected string $user;
     protected string $password;
@@ -13,8 +14,15 @@ class DatabaseCheck extends Check
     protected int $port;
     protected int $timeout = 5;
 
-    public function __construct(string $host, string $user, string $password, string $database, int $port = 3306)
-    {
+    public function __construct(
+        string $driver,
+        string $host,
+        string $user,
+        string $password,
+        string $database,
+        int $port = 3306
+    ) {
+        $this->driver = $driver;
         $this->host = $host;
         $this->user = $user;
         $this->password = $password;
@@ -50,13 +58,24 @@ class DatabaseCheck extends Check
         return $result;
     }
 
-    public function getConnection(): \PDO
+    protected function getConnection(): \PDO
     {
         return new \PDO(
-            sprintf('mysql:dbname=%s;host=%s;port=%d', $this->database, $this->host, $this->port),
+            $this->getPdoDsn(),
             $this->user,
             $this->password,
             [ \PDO::ATTR_TIMEOUT => $this->timeout ]
+        );
+    }
+
+    protected function getPdoDsn(): string
+    {
+        return sprintf(
+            '%s:dbname=%s;host=%s;port=%d',
+            $this->driver,
+            $this->database,
+            $this->host,
+            $this->port
         );
     }
 }
