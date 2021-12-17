@@ -1,6 +1,6 @@
 # Neos Oh Dear
 
-This package makes it easy to monitor your neos application vitals and outputs a JSON for Oh Dear.
+This package makes it easy to monitor your Neos application vitals and outputs a JSON for Oh Dear.
 
 ## Installation
 
@@ -14,11 +14,11 @@ composer require wy/neos-oh-dear
 
 1. Create a file in the applications root folder
     1. Require `../Packages/Plugins/Wysiwyg.OhDear/autoload.php`
-    2. Initialize the `\Wysiwyg\OhDear\Application` class with the Composer autoloader from the require from step 2
-    3. Initialize your checks with the correct config values
+    2. Initialize the `\Wysiwyg\OhDear\Application` class with the Composer autoloader (see below for an example)
+    3. Initialize your checks with the correct configuration values
     4. Process the steps
-2. Configure your Oh Dear secret in the following config path `Wysiwyg.OhDear.healthSecret` (only for production)
-3. Open the file in your web browser, the result should be a json
+2. Configure your Oh Dear secret at the following config path in Neos: `Wysiwyg.OhDear.healthSecret` (only for production)
+3. Open the file in your web browser, the result should be a JSON string (see example below)
 
 ### Available Checks
 - [CpuLoadCheck](./Classes/Checks/CpuLoadCheck.php)
