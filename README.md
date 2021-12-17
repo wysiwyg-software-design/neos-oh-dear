@@ -12,7 +12,22 @@ composer require wy/neos-oh-dear
 
 ## Set Up
 
-1. Create a file in the applications root folder and copy following code:
+1. Create a file in the applications root folder
+    1. Require `../Packages/Plugins/Wysiwyg.OhDear/autoload.php`
+    2. Initialize the `\Wysiwyg\OhDear\Application` class with the Composer autoloader from the require from step 2
+    3. Initialize your checks with the correct config values
+    4. Process the steps
+2. Configure your Oh Dear secret in the following config path `Wysiwyg.OhDear.healthSecret` (only for production)
+3. Open the file in your web browser, the result should be a json
+
+### Available Checks
+- [CpuLoadCheck](./Classes/Checks/CpuLoadCheck.php)
+- [DatabaseCheck](./Classes/Checks/DatabaseCheck.php)
+- [DiskSpaceCheck](./Classes/Checks/DiskSpaceCheck.php)
+- [RedisCheck](./Classes/Checks/RedisCheck.php)
+- [SwiftSmtpCheck](./Classes/Checks/SwiftSmtpCheck.php)
+
+### Example File
 
 ```php
 <?php
@@ -51,5 +66,41 @@ $checks = [
 $app->process($checks);
 ```
 
-2. Remove unused Checks
-3. Open the file in your web browser, the result should be a json
+### JSON Output example
+```json
+{
+    "finishedAt": 1639735170,
+    "checkResults": [
+        {
+            "name": "Disk space",
+            "label": "",
+            "notificationMessage": "The disk is almost full (90% used).",
+            "shortSummary": "90%",
+            "status": "warning",
+            "meta": {
+                "disk_space_used_percentage": 90
+            }
+        },
+        {
+            "name": "CPU Load",
+            "label": "",
+            "notificationMessage": "",
+            "shortSummary": "3.31982421875 2.98046875 2.98046875",
+            "status": "ok",
+            "meta": {
+                "lastMinute": 3.31982421875,
+                "last5Minutes": 2.98046875,
+                "last15Minutes": 2.98046875
+            }
+        },
+        {
+            "name": "Database Connection",
+            "label": "",
+            "notificationMessage": "",
+            "shortSummary": "Conntected",
+            "status": "ok",
+            "meta": []
+        }
+    ]
+}
+```
