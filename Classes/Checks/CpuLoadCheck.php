@@ -35,7 +35,8 @@ class CpuLoadCheck extends Check
     {
         $cpuLoad = $this->measureCpuLoad();
 
-        $result = CheckResult::make('CPU Load')
+        $result = CheckResult::make('CpuLoad')
+            ->label('CPU Load')
             ->shortSummary(
                 "{$cpuLoad['lastMinute']} {$cpuLoad['last5Minutes']} {$cpuLoad['last15Minutes']}"
             )

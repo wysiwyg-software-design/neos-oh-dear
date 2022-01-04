@@ -35,7 +35,8 @@ class RedisCheck extends Check
 
     public function run(): CheckResult
     {
-        $result = CheckResult::make('Redis Connection')
+        $result = CheckResult::make('Redis')
+            ->label('Redis connection')
             ->shortSummary('Conntected');
 
         try {

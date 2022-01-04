@@ -39,7 +39,8 @@ class DatabaseCheck extends Check
 
     public function run(): CheckResult
     {
-        $result = CheckResult::make('Database Connection')
+        $result = CheckResult::make('Database')
+            ->label('Database Connection')
             ->shortSummary('Conntected');
 
         try {

@@ -80,6 +80,14 @@ class CheckResult
         return $this;
     }
 
+
+    public function label(string $label): self
+    {
+        $this->label = $label;
+
+        return $this;
+    }
+
     /**
      * @param array $meta
      *

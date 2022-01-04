@@ -53,7 +53,8 @@ class SwiftSmtpCheck extends Check
 
     public function run(): CheckResult
     {
-        $result = CheckResult::make('SMTP Connection')
+        $result = CheckResult::make('Smpt')
+            ->label('SMTP Connection')
             ->shortSummary('Conntected');
 
         if ($exception = $this->getSmtpConnectionException()) {
