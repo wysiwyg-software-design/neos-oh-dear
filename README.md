@@ -12,7 +12,7 @@ composer require wy/neos-oh-dear
 
 ## Set Up
 
-1. Create a file in the applications root folder
+1. Create a file in the web root folder, e.g. `health.php`(see [example below](#example-file))
     1. Require `../Packages/Plugins/Wysiwyg.OhDear/autoload.php`
     2. Initialize the `\Wysiwyg\OhDear\Application` class with the Composer autoloader (see below for an example)
     3. Initialize your checks with the correct configuration values
