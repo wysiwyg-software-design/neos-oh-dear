@@ -30,7 +30,7 @@ class ScheduledTaskMonitor
 
     public function finish(int $exitCode =  0, string $errorMessage = null): self
     {
-        $memoryUsage = memory_get_peak_usage() / 1024 / 1024;
+        $memoryUsage = memory_get_peak_usage();
         $timeElapsedInSeconds = round((microtime(true) - $this->startTimeInMicroSeconds) / (10**6), 2);
         $requestBody = [
             'memory' => $memoryUsage,
@@ -43,13 +43,14 @@ class ScheduledTaskMonitor
         }
 
         $this->getRequestEngine()
-            ->request(
-                static::BASE_URL . $this->id,
-                'POST',
-                $requestBody
-            );
+            ->request($this->getPingUrl(), 'POST', $requestBody);
 
         return $this;
+    }
+
+    protected function getPingUrl(): string
+    {
+        return static::BASE_URL . $this->id;
     }
 
     protected function getRequestEngine(): Browser
