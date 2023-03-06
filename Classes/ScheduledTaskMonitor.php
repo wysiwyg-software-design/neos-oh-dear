@@ -2,7 +2,7 @@
 
 namespace Wysiwyg\OhDear;
 
-use \Neos\Flow\Http\Client\Browser;
+use Neos\Flow\Http\Client\Browser;
 use Neos\Flow\Http\Client\CurlEngine;
 
 class ScheduledTaskMonitor
@@ -21,12 +21,14 @@ class ScheduledTaskMonitor
         return new static($id);
     }
 
-    public function start()
+    public function start(): self
     {
         $this->startTimeInMicroSeconds = microtime(true);
+
+        return $this;
     }
 
-    public function finish(int $exitCode =  0, string $errorMessage = null)
+    public function finish(int $exitCode =  0, string $errorMessage = null): self
     {
         $memoryUsage = memory_get_peak_usage() / 1024 / 1024;
         $timeElapsedInSeconds = round((microtime(true) - $this->startTimeInMicroSeconds) / (10**6), 2);
@@ -46,6 +48,8 @@ class ScheduledTaskMonitor
                 'POST',
                 $requestBody
             );
+
+        return $this;
     }
 
     protected function getRequestEngine(): Browser
