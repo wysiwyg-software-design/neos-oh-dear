@@ -9,7 +9,7 @@ class ScheduledTaskMonitor
 {
     protected string $id;
     protected float $startTimeInMicroSeconds = 0.0;
-    const BASE_URL = 'https://https://ping.ohdear.app/';
+    const BASE_URL = 'https://ping.ohdear.app/';
 
     public function __construct(string $id)
     {
