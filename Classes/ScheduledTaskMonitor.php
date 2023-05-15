@@ -2,7 +2,8 @@
 
 namespace Wysiwyg\OhDear;
 
-use Neos\Flow\Http\Client\Browser;
+use GuzzleHttp\Psr7\Request;
+use GuzzleHttp\Psr7\Utils;
 use Neos\Flow\Http\Client\CurlEngine;
 
 class ScheduledTaskMonitor
@@ -31,7 +32,7 @@ class ScheduledTaskMonitor
     public function finish(int $exitCode =  0, string $errorMessage = null): self
     {
         $memoryUsage = memory_get_peak_usage();
-        $timeElapsedInSeconds = round((microtime(true) - $this->startTimeInMicroSeconds) / (10**6), 2);
+        $timeElapsedInSeconds = round(microtime(true) - $this->startTimeInMicroSeconds, 2);
         $requestBody = [
             'memory' => $memoryUsage,
             'runtime' => $timeElapsedInSeconds,
@@ -42,8 +43,8 @@ class ScheduledTaskMonitor
             $requestBody['failure_message'] = $errorMessage;
         }
 
-        $this->getRequestEngine()
-            ->request($this->getPingUrl(), 'POST', $requestBody);
+        $engine = new CurlEngine();
+        $engine->sendRequest($this->createRequestWithFormData($requestBody));
 
         return $this;
     }
@@ -53,11 +54,13 @@ class ScheduledTaskMonitor
         return static::BASE_URL . $this->id;
     }
 
-    protected function getRequestEngine(): Browser
+    protected function createRequestWithFormData(array $formData): Request
     {
-        $browser = new Browser();
-        $browser->setRequestEngine(new CurlEngine());
-
-        return $browser;
+        return new Request(
+            'POST',
+            $this->getPingUrl(),
+            ['Content-Type', 'multipart/form-data'],
+            Utils::streamFor(http_build_query($formData))
+        );
     }
 }
