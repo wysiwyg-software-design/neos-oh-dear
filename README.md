@@ -1,3 +1,6 @@
+> [!CAUTION]
+> This repository is deprecated and will be removed in September 2025
+
 # Neos Oh Dear
 
 This package makes it easy to monitor your Neos application vitals and outputs a JSON for Oh Dear.
